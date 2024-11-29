@@ -11,10 +11,11 @@ form.addEventListener('submit', async (event) => {
     event.preventDefault();
 
     const query = searchInput.value.trim();
-    if (!query) {
+    const regex = /^[a-zA-Z0-9\s]+$/;
+    if (!query || !regex.test(query)) {
         iziToast.error({
             title: 'Error',
-            message: 'Search query cannot be empty. Please enter a valid search term.',
+            message: 'Invalid search query. Please enter a valid search term.',
         });
         return;
     }
