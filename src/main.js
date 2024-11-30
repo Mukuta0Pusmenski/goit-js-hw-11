@@ -8,7 +8,7 @@ const searchInput = document.getElementById('search-input');
 const imageResults = document.getElementById('image-results');
 
 form.addEventListener('submit', async (event) => {
-    event.prevent.preventDefault();
+    event.preventDefault();
 
     const query = searchInput.value.trim();
     const regex = /^[a-zA-Z0-9\s]+$/;
