@@ -8,7 +8,7 @@ const searchInput = document.getElementById('search-input');
 const imageResults = document.getElementById('image-results');
 
 form.addEventListener('submit', async (event) => {
-    event.preventDefault();
+    event.prevent.preventDefault();
 
     const query = searchInput.value.trim();
     const regex = /^[a-zA-Z0-9\s]+$/;
@@ -22,6 +22,8 @@ form.addEventListener('submit', async (event) => {
 
     try {
         const data = await fetchImages(query);
+
+        console.log(data);  // Додаємо консольний лог для перевірки даних
 
         if (data.hits.length === 0) {
             iziToast.error({
