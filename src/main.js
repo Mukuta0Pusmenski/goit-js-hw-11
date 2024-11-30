@@ -4,7 +4,6 @@ import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 import { fetchImages } from './js/pixabay-api.js';
 import { displayImages } from './js/render-functions.js';
-import 'css-loader/dist/css-loader.css'; // імпорт css-loader стилів
 
 const form = document.getElementById('search-form');
 const searchInput = document.getElementById('search-input');
@@ -25,6 +24,7 @@ form.addEventListener('submit', async (event) => {
     }
 
     loader.style.display = 'block'; // показати індикатор завантаження
+    imageResults.innerHTML = ''; // очистити попередні результати
 
     try {
         const data = await fetchImages(query);
@@ -42,7 +42,7 @@ form.addEventListener('submit', async (event) => {
         }
 
         displayImages(data.hits, imageResults);
-        
+
         const lightbox = new SimpleLightbox('.image-item a', {
             captions: true,
             captionsData: 'alt',
