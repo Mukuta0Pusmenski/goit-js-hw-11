@@ -4,5 +4,10 @@ export default defineConfig({
   root: './src',
   build: {
     outDir: '../dist',
+    rollupOptions: {
+      external: [
+        'lightbox2'
+      ],
+    },
   },
 });
