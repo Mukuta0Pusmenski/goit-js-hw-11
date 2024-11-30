@@ -1,11 +1,15 @@
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
+import SimpleLightbox from 'simplelightbox';
+import 'simplelightbox/dist/simple-lightbox.min.css';
 import { fetchImages } from './js/pixabay-api.js';
 import { displayImages } from './js/render-functions.js';
+import 'css-loader/dist/css-loader.css'; // імпорт css-loader стилів
 
 const form = document.getElementById('search-form');
 const searchInput = document.getElementById('search-input');
 const imageResults = document.getElementById('image-results');
+const loader = document.getElementById('loader');
 
 form.addEventListener('submit', async (event) => {
     event.preventDefault();
@@ -20,10 +24,10 @@ form.addEventListener('submit', async (event) => {
         return;
     }
 
+    loader.style.display = 'block'; // показати індикатор завантаження
+
     try {
         const data = await fetchImages(query);
-
-        console.log(data);  // Додаємо консольний лог для перевірки даних
 
         if (data.hits.length === 0) {
             iziToast.error({
@@ -33,14 +37,26 @@ form.addEventListener('submit', async (event) => {
                 position: 'center',
                 timeout: 5000,
             });
+            loader.style.display = 'none'; // приховати індикатор завантаження
             return;
         }
 
         displayImages(data.hits, imageResults);
+        
+        const lightbox = new SimpleLightbox('.image-item a', {
+            captions: true,
+            captionsData: 'alt',
+            captionDelay: 250,
+        });
+
+        lightbox.refresh();
+
+        loader.style.display = 'none'; // приховати індикатор завантаження
     } catch (error) {
         iziToast.error({
             title: 'Error',
             message: `An error occurred: ${error.message}`,
         });
+        loader.style.display = 'none'; // приховати індикатор завантаження
     }
 });
