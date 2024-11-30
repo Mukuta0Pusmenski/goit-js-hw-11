@@ -1,9 +1,7 @@
 export function displayImages(images, container) {
     container.innerHTML = images.map(image => `
         <div class="image-item">
-            <a href="${image.largeImageURL}" data-lightbox="image-gallery" data-title="Likes: ${image.likes}, Views: ${image.views}, Comments: ${image.comments}, Downloads: ${image.downloads}">
-                <img src="${image.webformatURL}" alt="${image.tags}">
-            </a>
+            <img src="${image.webformatURL}" alt="${image.tags}">
             <div class="image-stats">
                 <p>Likes: ${image.likes}</p>
                 <p>Views: ${image.views}</p>
