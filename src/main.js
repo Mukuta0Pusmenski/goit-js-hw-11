@@ -1,11 +1,11 @@
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
+import { fetchImages } from './js/pixabay-api.js';
+import { displayImages } from './js/render-functions.js';
 
 const form = document.getElementById('search-form');
 const searchInput = document.getElementById('search-input');
 const imageResults = document.getElementById('image-results');
-
-const API_KEY = '47345734-08f76e4fa789f0ddb3136f311'; // Замініть на ваш унікальний ключ
 
 form.addEventListener('submit', async (event) => {
     event.preventDefault();
@@ -21,8 +21,7 @@ form.addEventListener('submit', async (event) => {
     }
 
     try {
-        const response = await fetch(`https://pixabay.com/api/?key=${API_KEY}&q=${encodeURIComponent(query)}&image_type=photo&orientation=horizontal&safesearch=true`);
-        const data = await response.json();
+        const data = await fetchImages(query);
 
         if (data.hits.length === 0) {
             iziToast.error({
@@ -35,7 +34,7 @@ form.addEventListener('submit', async (event) => {
             return;
         }
 
-        displayImages(data.hits);
+        displayImages(data.hits, imageResults);
     } catch (error) {
         iziToast.error({
             title: 'Error',
@@ -43,11 +42,3 @@ form.addEventListener('submit', async (event) => {
         });
     }
 });
-
-function displayImages(images) {
-    imageResults.innerHTML = images.map(image => `
-        <div class="image-item">
-            <img src="${image.webformatURL}" alt="${image.tags}">
-        </div>
-    `).join('');
-}
