@@ -42,6 +42,12 @@ button[type="submit"]:hover {
 .image-item {
   flex: 1 1 calc(33.333% - 10px);
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
 }
 
 .image-item img {
@@ -50,7 +56,21 @@ button[type="submit"]:hover {
   display: block;
 }
 
-.iziToast {
-  margin-top: 20px;
-  /* Додаємо відступ між повідомленнями iziToast */
+.image-stats {
+  margin-top: 10px;
+}
+
+.image-stats p {
+  margin: 4px 0;
+}
+
+/* Стилі для індикатора завантаження */
+#loader {
+  display: none;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 24px;
+  color: #007bff;
 }
